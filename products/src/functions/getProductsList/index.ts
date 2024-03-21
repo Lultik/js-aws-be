@@ -1,7 +1,6 @@
 import { handlerPath } from '@libs/handler-resolver';
-import type { AWS } from '@serverless/typescript';
 
-const getProductsList: AWS['functions'][number] = {
+const getProductsList = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
@@ -9,6 +8,19 @@ const getProductsList: AWS['functions'][number] = {
         method: 'get',
         path: 'products',
         cors: true,
+        responses: {
+          default: {},
+          200: {
+            description: 'Get list of all products',
+            bodyType: 'ProductList',
+          },
+          404: {
+            description: 'Products not found',
+          },
+          500: {
+            description: 'Internal server error',
+          }
+        },
       },
     },
   ],

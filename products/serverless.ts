@@ -1,12 +1,11 @@
 import type { AWS } from '@serverless/typescript';
 
-import getProductsList from 'src/functions/getProductsList';
-import getProductsById from 'src/functions/getProductsById';
+import { getProductsById, getProductsList } from 'src/functions';
 
 const serverlessConfiguration: AWS = {
   service: 'products',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-auto-swagger', 'serverless-esbuild', 'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs18.x',
@@ -21,10 +20,13 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
   },
-  // import the function via paths
   functions: {getProductsList, getProductsById},
   package: {individually: true},
   custom: {
+    autoswagger: {
+      typefiles: ['./src/types/Product.d.ts'],
+      swaggerPath: 'doc',
+    },
     esbuild: {
       bundle: true,
       minify: false,
