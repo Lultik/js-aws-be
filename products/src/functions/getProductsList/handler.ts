@@ -1,11 +1,14 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
-import { formatJSONResponse } from '@libs/api-gateway';
+import { formatJSONResponse, internalError, ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import products from './response.mock.json'
 
 import schema from './schema';
 
 const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
-  return formatJSONResponse(products);
+  try {
+    return formatJSONResponse(products);
+  } catch (err) {
+    return internalError(err)
+  }
 };
 
 export const main = getProductsList;
