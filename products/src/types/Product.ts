@@ -3,6 +3,7 @@ export interface Product {
   title: string;
   id: string;
   price: number;
+  imageName: string;
 }
 
 export type ProductList = Array<Product>;

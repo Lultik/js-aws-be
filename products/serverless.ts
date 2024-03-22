@@ -24,7 +24,7 @@ const serverlessConfiguration: AWS = {
   package: {individually: true},
   custom: {
     autoswagger: {
-      typefiles: ['./src/types/Product.d.ts'],
+      typefiles: ['./src/types/Product.ts'],
       swaggerPath: 'doc',
     },
     esbuild: {
